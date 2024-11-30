@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 def display_menu():
     print("\nOptions:")
@@ -30,12 +31,25 @@ def collect_information():
     contact_number = input("Contact Number: ").strip()
     email = input("Email Address: ").strip()
 
+    additional_info = {}
+    while True:
+        add_field = input("Do you want to add additional information? (yes/no): ").strip().lower()
+        if add_field == "yes":
+            key = input("Enter the field name: ").strip()
+            value = input(f"Enter the value for {key}: ").strip()
+            additional_info[key] = value
+        elif add_field == "no":
+            break
+
+    
     with open("personal_information.txt", "a") as file:
         file.write(f"Full Name: {fullname}\n")
         file.write(f"Address: {address}\n")
         file.write(f"Age: {age}\n")
         file.write(f"Contact Number: {contact_number}\n")
         file.write(f"Email Address: {email}\n")
+        for key, value in additional_info.items():
+            file.write(f"{key}: {value}\n")
         file.write("-" * 40 + "\n")
 
 def main():
